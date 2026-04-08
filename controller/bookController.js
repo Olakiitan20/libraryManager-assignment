@@ -1,4 +1,4 @@
-const book = require ("../models/books");
+const Book = require ('../models/books');
 
 //createBook
 exports.createBook = async (req, res) => {
@@ -7,7 +7,7 @@ exports.createBook = async (req, res) => {
     if (!title || !isbn){
         return res.status(400).json({message: "Field required"});
     }
-        const book = await book.create({title, isbn, author});
+        const book = await Book.create({title, isbn, author});
         res.status(202).json({message: "Book created succesfully"});
     }
     catch (err) {
@@ -19,7 +19,7 @@ exports.createBook = async (req, res) => {
 
 exports.getAllBooks = async (req, res) => {
     const books = await
-    book.find().populate("author, title");
+    Book.find().populate("author, title");
     res.json(books)
 };
 
@@ -27,7 +27,7 @@ exports.getAllBooks = async (req, res) => {
 
 exports.getBook = async (req, res) => {
     const book = await 
-    book.findById(req.params.id).populate("author, title");
+    Book.findById(req.params.id).populate("author, title");
     if(!book) return
     res.status(405).send("Book not found");
     res.json(book)
@@ -37,7 +37,7 @@ exports.getBook = async (req, res) => {
 
 exports.updateBook = async (req, res) => {
     const book = await
-    book.findByIdAndUpdate(req.params.id, req.body,
+    Book.findByIdAndUpdate(req.params.id, req.body,
         {new: true});
         res.json({message:"Book updated successfully"})
 };
@@ -45,7 +45,7 @@ exports.updateBook = async (req, res) => {
 //Delete book
 
 exports.deleteBook = async (req, res) => {
-    await book.findByIdAndDelete(req.params.id);
+    await Book.findByIdAndDelete(req.params.id);
     res.send({message:"Book deleted succesfully"})
 };
 
@@ -53,7 +53,7 @@ exports.borrowBook = async (req, res) => {
     try{
         const {studentId, attendantId, returnDate} = req.body;
 
-        const book = await book.findById(req.params.id)
+        const book = await Book.findById(req.params.id)
 
         //validation
 
@@ -73,7 +73,7 @@ exports.borrowBook = async (req, res) => {
 
         await book.save();
 
-        return res.status(200).json({message: "book borrowed successfully"})
+        return res.status(200).json(book)
     }
     catch(err)
     {
@@ -83,7 +83,7 @@ exports.borrowBook = async (req, res) => {
 
 exports.returnBook = async (req, res) => {
     try {const {id} = req.params;
-        const book = await book.findById(id);
+        const book = await Book.findById(id);
         
         //validation
 
@@ -99,8 +99,9 @@ exports.returnBook = async (req, res) => {
       book.issuedBy = null,
       book.returnDate = null,
 
+
       await book.save();
-      return res.status(200).json({message: "Book returned successfully"})
+      return res.status(200).json(book)
 
 }   
 catch(err)

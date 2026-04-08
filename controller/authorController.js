@@ -1,9 +1,9 @@
-const author = require ("../models/author");
+const Author = require ('../models/author');
 
 //createAuthor
 exports.creatAuthor = async (req, res) => {
     try {
-        const author = await author.create(req.body);
+        const author = await Author.create(req.body);
         res.status(202).json({message: "Author created succesfully"});
     }
     catch (err) {
@@ -13,7 +13,7 @@ exports.creatAuthor = async (req, res) => {
 
 //Get all Authors
 exports.getAuthors = async (req, res) => {
-    const authors = await authors.find();
+    const authors = await Author.find();
     res.json(authors)
 };
 
@@ -21,7 +21,7 @@ exports.getAuthors = async (req, res) => {
 
 exports.getAuthor = async (req, res) => {
     const author = await 
-    author.findById(req.params.id);
+    Author.findById(req.params.id);
     if(!author) return res.status(405).send("Author not found");
     res.json(author)
 };
@@ -30,7 +30,7 @@ exports.getAuthor = async (req, res) => {
 
 exports.updateAuthor = async (req, res) => {
     const author = await
-    author.findByIdAndUpdate(req.params.id, req.body,
+    Author.findByIdAndUpdate(req.params.id, req.body,
         {new: true});
         res.json({message:"Author updated successfully"})
 };
@@ -38,6 +38,6 @@ exports.updateAuthor = async (req, res) => {
 //Delete author
 
 exports.deleteAuthor = async (req, res) => {
-    await author.findByIdAndDelete(req.params.id);
+    await Author.findByIdAndDelete(req.params.id);
     res.send({message:"Author deleted succesfully"})
 };

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 const bookSchema = new mongoose.Schema({
     title: {type: String, require: true},
@@ -6,10 +6,6 @@ const bookSchema = new mongoose.Schema({
     isbn: {type: String, unique: true},
 
     authors: [{type: mongoose.Schema.Types.ObjectId, ref: "author"}],
-
-    copies: { type: Number, default: 1 },
-
-    availableCopies: { type: Number, default: 1 },
 
         status: {type: String,
         enum: ["IN", "OUt"],
@@ -27,4 +23,4 @@ const bookSchema = new mongoose.Schema({
 
 {timestamps: true});
 
-module.exports = mongoose.model("Book", bookSchema);
+module.exports = mongoose.model('Book', bookSchema);

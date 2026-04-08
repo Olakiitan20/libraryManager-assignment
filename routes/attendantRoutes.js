@@ -1,11 +1,11 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const attendantController = require("../controller/attendantController");
+const attendantController = require('../controller/attendantController');
 
 
-router.post("/", attendantController.createAttendant);
-router.get("/", attendantController.getAllAttendant);
-router.get("/:id", attendantController.getSingleAttendant);
+router.post('/attendant', attendantController.createAttendant);
+router.get('/allAttendant', attendantController.getAllAttendant);
+router.get('/attendant/:id', attendantController.getSingleAttendant);
 
 
 module.exports = router;
